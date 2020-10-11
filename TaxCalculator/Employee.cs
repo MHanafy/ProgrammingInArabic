@@ -40,20 +40,7 @@ namespace TaxCalculator
         public decimal CalculateMonthlyTax(TaxScale[] taxScales, decimal discount)
         {
             var result = CalculateMonthlyTax(taxScales);
-            var x = Sum("", 10);
-
             return result - discount;
         }
-
-        public int Sum(string x,params int[] numbers)
-        {
-            int result = 0;
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                result += numbers[i];
-            }
-            return result;
-        }
-
     }
 }

@@ -7,8 +7,6 @@ namespace TaxCalculator
     {
         static void Main(string[] args)
         {
-            Functions.Do();
-            return;
             var employees = ReadEmployeesFromFile(@"c:\temp\employees2.csv");
             var taxScales = ReadTaxScalesFromFile(@"c:\temp\tax.csv");
             PrintEmployeesData(employees, taxScales);
