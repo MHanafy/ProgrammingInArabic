@@ -7,17 +7,16 @@ namespace TaxCalculator
     {
         static void Main(string[] args)
         {
-            var employees = ReadEmployeesFromFile(@"c:\temp\employees2.csv");
-            var taxScales = ReadTaxScalesFromFile(@"c:\temp\tax.csv");
+            var taxScales = ReadTaxScalesFromFile(@"tax.csv");
+            var employees = ReadEmployeesFromFile(@"employees2.csv", taxScales);
             PrintEmployeesData(employees, taxScales);
+            Console.ReadLine();
         }
 
         static void PrintEmployeesData(Employee[] employees, TaxScale[] taxScales)
         {
             for (int i = 0; i < employees.Length; i++)
             {
-                employees[i].CalculateMonthlyTax(taxScales);
-
                 Console.WriteLine($"Id: {employees[i].Id} Name: {employees[i].FirstName} {employees[i].LastName} BD:{employees[i].BirthDate:d} " +
                     $"Joined: {employees[i].JoinDate:d} Salary: {employees[i].MonthlySalary}: Monthly Tax {employees[i].MonthlyTax}");
             }
@@ -42,7 +41,7 @@ namespace TaxCalculator
             return taxScales;
         }
          
-        static Employee[] ReadEmployeesFromFile(string path)
+        static Employee[] ReadEmployeesFromFile(string path, TaxScale[] taxScales)
         {
             var lines = File.ReadAllLines(path);
             var employees = new Employee[lines.Length - 1];
@@ -50,7 +49,7 @@ namespace TaxCalculator
             for (int i = 1; i <= lines.Length - 1; i++)
             {
                 var values = lines[i].Split(',');
-                var emp = new Employee()
+                var emp = new Employee(taxScales)
                 {
                     Id = int.Parse(values[0]),
                     FirstName = values[1],

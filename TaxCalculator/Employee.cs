@@ -4,43 +4,48 @@ namespace TaxCalculator
 {
     class Employee
     {
+        private TaxScale[] _taxScales;
+        public Employee(TaxScale[] taxScales)
+        {
+            _taxScales = taxScales;
+        }
+
         public int Id;
         public string FirstName;
         public string LastName;
         public DateTime BirthDate { get; set; }
-        public decimal MonthlySalary { get; set; }
+
+        private decimal _monthlySalary;
+        public decimal MonthlySalary { get => _monthlySalary;
+            set { 
+                _monthlySalary = value;
+                CalculateMonthlyTax();
+            }
+        }
         public int? ManagerId { get; set; }
         public DateTime JoinDate { get; set; }
         public double Age => (DateTime.Now - BirthDate).Days / 365;
 
-        private decimal? _monthlyTax;
-        public decimal? MonthlyTax {
-            get {
-                if (_monthlyTax.HasValue) return _monthlyTax;
-                throw new InvalidOperationException("Please call CalculateMonthlyTax before accessing this property.");
-            }
+        public decimal MonthlyTax { get; private set; }
 
-            private set { _monthlyTax = value; }
-}
-
-        public decimal CalculateMonthlyTax(TaxScale[] taxScales)
+        private decimal CalculateMonthlyTax()
         {
             var annualSalary = MonthlySalary * 12;
-            for (int i = 0; i < taxScales.Length; i++)
+            for (int i = 0; i < _taxScales.Length; i++)
             {
-                if(annualSalary >= taxScales[i].From && annualSalary <= taxScales[i].To.GetValueOrDefault(decimal.MaxValue))
+                if(annualSalary >= _taxScales[i].From && annualSalary <= _taxScales[i].To.GetValueOrDefault(decimal.MaxValue))
                 {
-                    MonthlyTax = ((taxScales[i].Base + (annualSalary - taxScales[i].From) * taxScales[i].Percent) / 12);
-                    return MonthlyTax.Value;
+                    MonthlyTax = ((_taxScales[i].Base + (annualSalary - _taxScales[i].From) * _taxScales[i].Percent) / 12);
+                    return MonthlyTax;
                 }
             }
             throw new InvalidOperationException("Tax scale not found");
         }
 
-        public decimal CalculateMonthlyTax(TaxScale[] taxScales, decimal discount)
-        {
-            var result = CalculateMonthlyTax(taxScales);
-            return result - discount;
-        }
+        //public decimal CalculateMonthlyTax(TaxScale[] taxScales, decimal discount)
+        //{
+        //    var result = CalculateMonthlyTax(taxScales);
+        //    return result - discount;
+        //}
     }
 }
