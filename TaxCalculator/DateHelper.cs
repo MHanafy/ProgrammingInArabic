@@ -17,7 +17,6 @@ namespace TaxCalculator
         public static int GetAge(this IBirthDate person)
         {
             Counter++;
-            person.GetCount(true);
             var age = DateTime.Now - person.BirthDate;
             var years = age.TotalDays / YearDays;
             return Convert.ToInt32(Math.Floor(years));

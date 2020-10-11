@@ -7,7 +7,6 @@ namespace TaxCalculator
     interface IBirthDate
     {
         DateTime BirthDate { get; }
-        int GetCount(bool valid);
     }
 
     interface INamable
