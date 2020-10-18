@@ -16,8 +16,11 @@ namespace TaxCalculator
         public DateTime BirthDate { get; set; }
 
         private decimal _monthlySalary;
-        public decimal MonthlySalary { get => _monthlySalary;
-            set { 
+        public decimal MonthlySalary
+        {
+            get => _monthlySalary;
+            set
+            {
                 _monthlySalary = value;
                 CalculateMonthlyTax();
             }
@@ -33,7 +36,7 @@ namespace TaxCalculator
             var annualSalary = MonthlySalary * 12;
             for (int i = 0; i < _taxScales.Length; i++)
             {
-                if(annualSalary >= _taxScales[i].From && annualSalary <= _taxScales[i].To.GetValueOrDefault(decimal.MaxValue))
+                if (annualSalary >= _taxScales[i].From && annualSalary <= _taxScales[i].To.GetValueOrDefault(decimal.MaxValue))
                 {
                     MonthlyTax = ((_taxScales[i].Base + (annualSalary - _taxScales[i].From) * _taxScales[i].Percent) / 12);
                     return MonthlyTax;
@@ -41,11 +44,5 @@ namespace TaxCalculator
             }
             throw new InvalidOperationException("Tax scale not found");
         }
-
-        //public decimal CalculateMonthlyTax(TaxScale[] taxScales, decimal discount)
-        //{
-        //    var result = CalculateMonthlyTax(taxScales);
-        //    return result - discount;
-        //}
     }
 }

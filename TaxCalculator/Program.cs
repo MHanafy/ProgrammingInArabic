@@ -7,9 +7,23 @@ namespace TaxCalculator
     {
         static void Main(string[] args)
         {
+            DrawShapes();
+            return;
             var taxScales = ReadTaxScalesFromFile(@"tax.csv");
             var employees = ReadEmployeesFromFile(@"employees2.csv", taxScales);
             PrintEmployeesData(employees, taxScales);
+            Console.ReadLine();
+        }
+
+        static void DrawShapes()
+        {
+            
+            var circle = new Shape("Circle", ConsoleColor.Red, ConsoleColor.White);
+            var rect = new Rectangle(10,10);
+            circle.Draw();
+            rect.Draw();
+            Console.WriteLine($"circle area: {circle.GetArea()}");
+            Console.WriteLine($"rectagle width: {rect.Width} height: {rect.Height} area: {rect.GetArea()}");
             Console.ReadLine();
         }
 
