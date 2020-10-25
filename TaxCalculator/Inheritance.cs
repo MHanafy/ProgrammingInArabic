@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using System.Xml;
 
 namespace TaxCalculator
 {
-    public class Shape
+    public abstract class Shape
     {
         public Shape(string name, ConsoleColor foreColor = ConsoleColor.White, ConsoleColor backColor = ConsoleColor.Black)
         {
@@ -18,9 +19,9 @@ namespace TaxCalculator
         {
             Console.ForegroundColor = ForeColor;
             Console.BackgroundColor = BackColor;
-            Console.WriteLine(Name);
+            Console.WriteLine($"Name: {Name} Area: {GetArea()}");
         }
-        public virtual int GetArea() => 0;
+        public abstract int GetArea();
     }
 
     public class Rectangle : Shape
@@ -35,6 +36,21 @@ namespace TaxCalculator
         public override int GetArea()
         {
             return Width * Height;
+        }
+    }
+
+    public class Circle : Shape
+    {
+        public readonly int Diameter;
+        public Circle(int diameter) : base("Circle")
+        {
+            Diameter = diameter;
+        }
+
+        public override int GetArea()
+        {
+            var d = Diameter / 2;
+            return Convert.ToInt32(Math.PI * (d * d));
         }
     }
 }

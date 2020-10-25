@@ -17,14 +17,10 @@ namespace TaxCalculator
 
         static void DrawShapes()
         {
-            
-            var circle = new Shape("Circle", ConsoleColor.Red, ConsoleColor.White);
+            var circle = new Circle(10);
             var rect = new Rectangle(10,10);
             circle.Draw();
             rect.Draw();
-            Console.WriteLine($"circle area: {circle.GetArea()}");
-            Console.WriteLine($"rectagle width: {rect.Width} height: {rect.Height} area: {rect.GetArea()}");
-            Console.ReadLine();
         }
 
         static void PrintEmployeesData(Employee[] employees, TaxScale[] taxScales)
